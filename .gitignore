@@ -1,0 +1,5 @@
+GenerateAuditSystemDsc.ps1
+DSCResource.Tests
+.vs
+.vscode
+node_modules
