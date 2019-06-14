@@ -4,7 +4,7 @@ $script:modulesFolderPath = Join-Path -Path $script:resourceModulePath -ChildPat
 $script:resourceHelperModulePath = Join-Path -Path $script:modulesFolderPath -ChildPath 'AuditSystemDsc.Common'
 Import-Module -Name (Join-Path -Path $script:resourceHelperModulePath -ChildPath 'AuditSystemDsc.Common.psm1')
 
-$script:localizedData = Get-LocalizedData -ResourceName 'AuditSystemDsc'
+$script:localizedData = Get-LocalizedData -ResourceName 'AuditSetting'
 
 <#
     .SYNOPSIS
@@ -163,15 +163,15 @@ function Write-PropertyValue
         $Object
     )
 
-    foreach ($instnace in $Object)
+    foreach ($instance in $Object)
     {
-        $propertyNames = $Object | Get-Member -MemberType Property
+        $propertyNames = $instance | Get-Member -MemberType Properties
 
         foreach ($propertyName in $propertyNames.Name)
         {
-            if ([string]::IsNullOrWhiteSpace($Object.$propertyName) -eq $false)
+            if ([string]::IsNullOrWhiteSpace($instance.$propertyName) -eq $false)
             {
-                "$propertyName`: $($Object.$propertyName)"
+                "$propertyName`: $(([string]$instance.$propertyName).Trim())"
             }
         }
     }

@@ -5,5 +5,5 @@ class AuditSetting : OMI_BaseResource
     [Key, Description("The property name to be audited.")] String Property;
     [Key, Description("Specifies the desired value of the property being audited.")] String DesiredValue;
     [Required, Description("The comparison operator to be used to craft the condition that defines compliance.")] String Operator;
-    [Read, Description("An array of strings listing all the properties and values of the WMI class being queried.")] String ResulteString[];
+    [Read, Description("An array of strings listing all the properties and values of the WMI class being queried.")] String ResultString[];
 };

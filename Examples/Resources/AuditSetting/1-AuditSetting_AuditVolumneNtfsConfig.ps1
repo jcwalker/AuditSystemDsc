@@ -9,7 +9,7 @@ configuration AuditSystem_AuditVolumneNtfsConfig
             Query = "SELECT * FROM Win32_LogicalDisk WHERE DriveType = '3'"
             Property = "FileSystem"
             DesiredValue = 'NTFS'
-            Operator = '-eq'          
+            Operator = '-eq'
         }
     }
 }

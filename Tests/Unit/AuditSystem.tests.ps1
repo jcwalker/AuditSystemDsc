@@ -1,28 +1,6 @@
-<#
-    .SYNOPSIS
-        Template for creating DSC Resource Unit Tests
-
-    .DESCRIPTION
-        To Use:
-        1. Copy to \Tests\Unit\ folder and rename <ResourceName>.tests.ps1
-           (e.g. MSFT_xFirewall.tests.ps1).
-        2. Customize TODO sections.
-        3. Delete all template comments (TODOs, etc.).
-        4. Remove any unused It-, Context-, BeforeAll-, AfterAll-,
-           BeforeEach- and AfterEach-blocks.
-        5. Remove this comment-based help.
-
-    .NOTES
-        There are multiple methods for writing unit tests. This template provides a few examples
-        which you are welcome to follow but depending on your resource, you may want to
-        design it differently. Read through our TestsGuidelines.md file for an intro on how to
-        write unit tests for DSC resources: https://github.com/PowerShell/DscResources/blob/master/TestsGuidelines.md
-#>
-
 #region HEADER
-# TODO: Update to correct module name and resource name.
-$script:dscModuleName = '<ModuleName>'
-$script:dscResourceName = '<ResourceName>'
+$script:dscModuleName = 'AuditSystemDsc'
+$script:dscResourceName = 'AuditSetting'
 
 # Unit Test Template Version: 1.2.4
 $script:moduleRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
@@ -34,7 +12,6 @@ if ( (-not (Test-Path -Path (Join-Path -Path $script:moduleRoot -ChildPath 'DSCR
 
 Import-Module -Name (Join-Path -Path $script:moduleRoot -ChildPath (Join-Path -Path 'DSCResource.Tests' -ChildPath 'TestHelper.psm1')) -Force
 
-# TODO: Insert the correct <ModuleName> and <ResourceName> for your resource
 $TestEnvironment = Initialize-TestEnvironment `
     -DSCModuleName $script:dscModuleName `
     -DSCResourceName $script:dscResourceName `
@@ -42,11 +19,6 @@ $TestEnvironment = Initialize-TestEnvironment `
     -TestType Unit
 
 #endregion HEADER
-
-function Invoke-TestSetup
-{
-     # TODO: Optional init code goes here...
-}
 
 function Invoke-TestCleanup
 {
@@ -58,18 +30,7 @@ function Invoke-TestCleanup
 # Begin Testing
 try
 {
-    Invoke-TestSetup
-
     InModuleScope $script:dscResourceName {
-        # TODO: Optionally create any variables here for use by your tests
-
-        # TODO: Complete the Describe blocks below and add more as needed.
-        # The most common method for unit testing is to test by function. For more information
-        # check out this introduction to writing unit tests in Pester:
-        # https://www.simple-talk.com/sysadmin/powershell/practical-powershell-unit-testing-getting-started/#eleventh
-        # You may also follow one of the patterns provided in the TestsGuidelines.md file:
-        # https://github.com/PowerShell/DscResources/blob/master/TestsGuidelines.md
-
         Describe 'AuditSetting\Get-TargetResource' -Tag 'Get' {
             BeforeAll {
                 $parameters = @{
@@ -80,106 +41,97 @@ try
                 }
             }
 
-            AfterAll {
-                # Per describe-block cleanup
-            }
+            Context 'When the system is in the desired state' {
+                BeforeAll {
+                    Mock -CommandName Get-CimInstance
+                }
+ 
+                It 'Should return a hashtable' {
+                    $getTargetResourceResult = Get-TargetResource @parameters
+                    {$getTargetResourceResult -is [hashtable]} | Should -Be $true
 
-            BeforeEach {
-                # per-test-initialization
-                Mock -CommandName Get-CimInstance
-            }
+                    Assert-MockCalled -CommandName Get-CimInstance -Exactly -Times 1 -Scope It
+                }
+        }
+        }
 
-            AfterEach {
-                # per-test-cleanup
+        Describe 'AuditSetting\Test-TargetResource' -Tag 'Test' {
+            BeforeAll {
+                $parameters = @{
+                    Query = 'SELECT * FROM Win32_ClassName'
+                    Property = 'Property1'
+                    DesiredValue = 'InDesiredState'
+                    Operator = '-eq'
+                }
             }
 
             Context 'When the system is in the desired state' {
-                BeforeAll {
-                    # Per context-block initialization
-                }
-
-                AfterAll {
-                    # Per context-block cleanup
-                }
-
-                BeforeEach {
-                    # per test initialization
-                    Mock -CommandName New-Thing -MockWith {
-                        return 'New thing'
+                Mock Write-PropertyValue
+                Mock Get-CimInstance -MockWith {
+                    [PSCustomObject]@{
+                        Property1 = $parameters.DesiredValue
                     }
                 }
 
-                AfterEach {
-                    # per test cleanup
-                }
+                It 'Should return TRUE' {
+                    $testTargetResourceResult = Test-TargetResource @parameters
+                    $testTargetResourceResult | Should -Be $true
 
-                <#
-                    TODO: (Optional) If It-block description tends to be long,
-                    consider adding nested Context-blocks ('When...'), e.g 'When
-                    the configuration is absent', 'When the configuration should
-                    be present' or 'When the current description is returned
-                    as an empty string'.
-                #>
-                It 'Should ....test-description' {
-                    # TODO: Update test-code
-                    $getTargetResourceResult = Get-TargetResource -Parameter1 'Value1'
-                    $getTargetResourceResult.Value1 | Should -Be 'Expected value'
-
-                    Assert-MockCalled -CommandName Get-Something -Exactly -Times 1 -Scope It
-                    Assert-MockCalled -CommandName New-Thing -Exactly -Times 1 -Scope It
-                }
-
-                It 'Should ....test-description' {
-                    # test-code
+                    Assert-MockCalled -CommandName Get-CimInstance -Exactly -Times 1 -Scope It
+                    Assert-MockCalled -CommandName Write-PropertyValue -Exactly -Times 0 -Scope It
                 }
             }
 
             Context 'When the system is not in the desired state' {
-                It 'Should ....test-description' {
-                    # test-code
+                Mock Write-PropertyValue -MockWith {"'Property1 = 'NotInDesiredState'"}
+                Mock Get-CimInstance -MockWith {
+                    [PSCustomObject]@{
+                        Property1 = 'NotInDesiredState'
+                    }
+                }
+
+                It 'Should return FALSE' {
+                    $testTargetResourceResult = Test-TargetResource @parameters
+                    $testTargetResourceResult | Should -Be $false
+
+                    Assert-MockCalled -CommandName Get-CimInstance -Exactly -Times 1 -Scope It
+                    Assert-MockCalled -CommandName Write-PropertyValue -Exactly -Times 1 -Scope It
+                }
+            }
+
+            Context 'When the Query is invalid' {
+                Mock Get-CimInstance -MockWith {throw}
+                Mock Write-PropertyValue
+                Mock Write-Warning
+
+                It 'Should call Write-Warning' {
+                    $testTargetResourceResult = Test-TargetResource @parameters
+
+                    Assert-MockCalled -CommandName Get-CimInstance -Exactly -Times 1 -Scope It
+                    Assert-MockCalled -CommandName Write-PropertyValue -Exactly -Times 0 -Scope It
+                    Assert-MockCalled -CommandName Write-Warning -Exactly -Times 1 -Scope It
                 }
             }
         }
 
-        Describe 'MSFT_<ResourceName>\Set-TargetResource' -Tag 'Set' {
-            Context 'When the system is in the desired state' {
-                It 'Should ...test-description' {
-                    # test-code
-                }
+        Describe 'AuditSetting\Write-PropertyValue' -Tag 'Helper' {
+            $writeWarningParameters = @{
+                Object = @(
+                    [PSCustomObject]@{
+                        Property1 = 'Value1'
+                    }
+                    [PSCustomObject]@{
+                        Property2 = 'Value2'
+                    }
+                )
             }
+            It 'Should return the correct strings' {
+                $result = Write-PropertyValue @writeWarningParameters
 
-            Context 'When the system is not in the desired state' {
-                It 'Should ....test-description' {
-                    # test-code
-                }
-            }
-        }
-
-        Describe 'MSFT_<ResourceName>\Test-TargetResource' -Tag 'Test' {
-            Context 'When the system is in the desired state' {
-                It 'Should ...test-description' {
-                    # test-code
-                }
-            }
-
-            Context 'When the system is not in the desired state' {
-                It 'Should ....test-description' {
-                    # test-code
-                }
+                "Property1: Value1" | Should -BeIn $result
+                "Property2: Value2" | Should -BeIn $result
             }
         }
-
-        Describe 'MSFT_<ResourceName>\Get-HelperFunction' -Tag 'Helper' {
-            It 'Should ...test-description' {
-                # test-code
-            }
-
-            It 'Should ....test-description' {
-                # test-code
-            }
-        }
-
-        # TODO: add more Describe blocks as needed
     }
 }
 finally
