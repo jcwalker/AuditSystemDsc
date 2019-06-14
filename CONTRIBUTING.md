@@ -75,7 +75,7 @@ be placed in the resource module file [DscResource.Common](/Modules/AuditSetting
 ### Localization
 
 Please see the localization section in the [style guideline](https://github.com/PowerShell/DscResources/blob/master/StyleGuidelines.md#localization).
-The helper function are found in the module [DscResource.Common](/Modules/AuditSystemDsc.Common/AuditSystemDsc.Common.psm1).
+The helper function are found in the module [AuditSystemDsc.Common](/Modules/AuditSystemDsc.Common/AuditSystemDsc.Common.psm1).
 
 ### Unit tests
 
