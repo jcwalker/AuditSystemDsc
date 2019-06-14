@@ -159,7 +159,7 @@ function Write-PropertyValue
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$true)]
+        [Parameter()]
         [object[]]
         $Object
     )
