@@ -83,21 +83,20 @@ A resource the leverages CIM classes to verify system settings.
 
 * **`[String]` Query** _(Key)_: A WQL query used to retrieve the setting to be audited.
 * **`[String]` Property** _(Key)_: The property name to be audited.
-* **`[String]` DesiredValue** _(Key)_: Specifies the desired value 
+* **`[String]` DesiredValue** _(Key)_: Specifies the desired value
   of the property being audited.
 * **`[String]` Operator** _(Required)_: The comparison operator to be used
   to craft the condition that defines compliance.
 
 #### Read-Only Properties from Get-TargetResource
 
-* **`[String[]]` ResulteString** _(Read)_: An array of strings listing
+* **`[String[]]` ResultString** _(Read)_: An array of strings listing
   all the properties and values of the WMI class being queried.
 
 #### Examples
 
-* [Create folder as SYSTEM](/Examples/Resources/Folder/1-DscResourceTemplate_CreateFolderAsSystemConfig.ps1)
-* [Create folder as user](/Examples/Resources/Folder/2-DscResourceTemplate_CreateFolderAsUserConfig.ps1)
-* [Remove folder](/Examples/Resources/Folder/3-DscResourceTemplate_RemoveFolderConfig.ps1)
+* [Audit disk volumnes are NTFS](/Examples/Resources/AuditSetting/1-AuditSetting_AuditVolumneNtfsConfig.ps1)
+* [Audit local users that don't require a password](/Examples/Resources/AuditSetting/2-AuditSetting_AuditUsersPasswordNotRequiredConfig.ps1)
 
 #### Known issues
 

@@ -64,19 +64,19 @@ function Set-TargetResource
     [CmdletBinding()]
     param
     (
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Query,
 
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Property,
 
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $Operator,
 
-        [parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true)]
         [System.String]
         $DesiredValue
     )
@@ -155,7 +155,7 @@ function Test-TargetResource
 #>
 function Write-PropertyValue
 {
-    [OutputType([System.String[]])]
+    [OutputType([System.String])]
     [CmdletBinding()]
     param
     (

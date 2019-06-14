@@ -1,4 +1,4 @@
-configuration AuditSystem_AuditVolumneNtfsConfig
+configuration AuditSetting_AuditVolumneNtfsConfig
 {
     Import-DscResource -ModuleName AuditSystemDsc
 

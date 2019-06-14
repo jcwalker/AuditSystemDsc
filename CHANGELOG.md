@@ -4,4 +4,4 @@
 
 ## 1.0.0
 
-* Initial release with DSC Resource AuidtSetting
+* Initial release with DSC Resource AuditSetting
