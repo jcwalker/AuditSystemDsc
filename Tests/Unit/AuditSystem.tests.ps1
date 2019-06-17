@@ -159,12 +159,19 @@ try
                 }
                 It 'Should return the property with the KEY flag' {
                     $result = Get-CimKeyProperty -CimInstance @{CimClass = 'root/cimv2:Win32_LogicalDisk'}
+
                     $Result.Name | Should -Be 'KeyProperty'
                     $Result.Name | Should -Not -Be 'ReadOnlyProperty'
                 }
 
                 It 'Should call Get-CimClass with the correct parameters' {
-                    Assert-MockCalled -CommandName Get-CimClass -ParameterFilter {$NameSpace -eq 'root/cimv2' -and $ClassName -eq 'Win32_LogicalDisk'}
+                    $assertMockParameters = @{
+                        CommandName = 'Get-CimClass'
+                        ParameterFilter = {$NameSpace -eq 'root/cimv2' -and $ClassName -eq 'Win32_LogicalDisk'}
+                        Exactly = 1
+                    }
+
+                    Assert-MockCalled @assertMockParameters
                 }
             }
         }
