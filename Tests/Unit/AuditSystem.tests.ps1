@@ -168,7 +168,8 @@ try
                     $assertMockParameters = @{
                         CommandName = 'Get-CimClass'
                         ParameterFilter = {$NameSpace -eq 'root/cimv2' -and $ClassName -eq 'Win32_LogicalDisk'}
-                        Exactly = 1
+                        Exactly = $true
+                        Times = 1
                     }
 
                     Assert-MockCalled @assertMockParameters
