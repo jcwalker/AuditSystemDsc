@@ -198,6 +198,7 @@ function Get-CimKeyProperty
     $cimNameSpace, $cimClassName = $CimInstance.CimClass -split ':'
     $cimClassInfo = Get-CimClass -Namespace $cimNameSpace -ClassName $cimClassName
     $propertyNames = $cimClassInfo.CimClassProperties.Where({$PSItem.Flags.HasFlag([Microsoft.Management.Infrastructure.CimFlags]::Key)})
+    $propertyNames = $propertyNames.CimClassProperties.Where{($PSItem.Name -notmatch 'CreationClass')}
     $propertyNames
 }
 
