@@ -51,7 +51,7 @@ function Get-TargetResource
         Property = $Property
         Operator = $Operator
         DesiredValue = $DesiredValue
-        ResultString = $(Write-PropertyValue -Object $queryResult)
+        ResultString = [string[]]$(Write-PropertyValue -Object $queryResult)
     }
 }
 
@@ -80,7 +80,6 @@ function Set-TargetResource
         [System.String]
         $DesiredValue
     )
-
 }
 
 <#
@@ -131,7 +130,7 @@ function Test-TargetResource
             if ([bool]$isCompliant -eq $false)
             {
                 Write-Verbose -Message ($localizedData.NotInDesiredState -f $Property, $condition)
-                foreach ($propertyItem in $(Write-PropertyValue $instance))
+                foreach ($propertyItem in $(Write-PropertyValue -Object $instance))
                 {
                     Write-Verbose -Message $propertyItem
                 }
@@ -151,7 +150,7 @@ function Test-TargetResource
     .SYNOPSIS
         Displays the properties and values in a string array of an object.
     .PARAMETER Object
-        The object that contains the pproperties and values to be displayed.
+        The object that contains the properties and values to be displayed.
 #>
 function Write-PropertyValue
 {
@@ -166,7 +165,7 @@ function Write-PropertyValue
 
     foreach ($instance in $Object)
     {
-        $propertyNames = $instance | Get-Member -MemberType Properties
+        $propertyNames = $instance | Get-CimKeyProperty
 
         foreach ($propertyName in $propertyNames.Name)
         {
@@ -176,6 +175,30 @@ function Write-PropertyValue
             }
         }
     }
+}
+
+<#
+    .SYNOPSIS
+        Retrieves the properties with the Key flag.
+        Which gives the user context around what cim instance is out of compliance.
+    .PARAMETER CimInstance
+        The CimInstance to retrieve the Key property from.
+#>
+function Get-CimKeyProperty
+{
+    [OutputType([System.Object])]
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+        [object]
+        $CimInstance
+    )
+
+    $cimNameSpace, $cimClassName = $CimInstance.CimClass -split ':'
+    $cimClassInfo = Get-CimClass -Namespace $cimNameSpace -ClassName $cimClassName
+    $propertyNames = $cimClassInfo.CimClassProperties.Where({$PSItem.Flags.HasFlag([Microsoft.Management.Infrastructure.CimFlags]::Key)})
+    $propertyNames
 }
 
 Export-ModuleMember -Function 'Get-TargetResource','Set-TargetResource','Test-TargetResource'

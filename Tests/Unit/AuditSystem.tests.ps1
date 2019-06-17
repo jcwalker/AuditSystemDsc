@@ -114,22 +114,58 @@ try
             }
         }
 
-        Describe 'AuditSetting\Write-PropertyValue' -Tag 'Helper' {
-            $writeWarningParameters = @{
-                Object = @(
-                    [PSCustomObject]@{
-                        Property1 = 'Value1'
+        Describe 'AuditSetting\HelperFunctions' -Tag 'Helper' {
+            Context 'Write-PropertyValue' {
+                $writeWarningParameters = @{
+                    Object = @(
+                        [PSCustomObject]@{
+                            Property1 = 'Value1'
+                        }
+                        [PSCustomObject]@{
+                            Property2 = 'Value2'
+                        }
+                    )
+                }
+                It 'Should return the correct strings' {
+                    Mock -CommandName Get-CimKeyProperty -MockWith {
+                        @{
+                            Name = 'Property1'
+                        },
+                        @{
+                            Name = 'Property2'
+                        }
                     }
-                    [PSCustomObject]@{
-                        Property2 = 'Value2'
-                    }
-                )
-            }
-            It 'Should return the correct strings' {
-                $result = Write-PropertyValue @writeWarningParameters
+                    $result = Write-PropertyValue @writeWarningParameters
 
-                "Property1: Value1" | Should -BeIn $result
-                "Property2: Value2" | Should -BeIn $result
+                    "Property1: Value1" | Should -BeIn $result
+                    "Property2: Value2" | Should -BeIn $result
+                }
+            }
+
+            Context 'Get-CimKeyProperty' {
+                Mock -CommandName Get-CimClass -MockWith {
+                    @{
+                        CimClassProperties = @{
+                            Flags = [Microsoft.Management.Infrastructure.CimFlags]::Key
+                            Name = 'KeyProperty'
+                        }
+                    },
+                    @{
+                        CimClassProperties = @{
+                            Flags = [Microsoft.Management.Infrastructure.CimFlags]::ReadOnly
+                            Name = 'ReadOnlyProperty'
+                        }
+                    }
+                }
+                It 'Should return the property with the KEY flag' {
+                    $result = Get-CimKeyProperty -CimInstance @{CimClass = 'root/cimv2:Win32_LogicalDisk'}
+                    $Result.Name | Should -Be 'KeyProperty'
+                    $Result.Name | Should -Not -Be 'ReadOnlyProperty'
+                }
+
+                It 'Should call Get-CimClass with the correct parameters' {
+                    Assert-MockCalled -CommandName Get-CimClass -ParameterFilter {$NameSpace -eq 'root/cimv2' -and $ClassName -eq 'Win32_LogicalDisk'}
+                }
             }
         }
     }
