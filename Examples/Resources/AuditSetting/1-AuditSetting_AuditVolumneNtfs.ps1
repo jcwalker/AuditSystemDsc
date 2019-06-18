@@ -22,7 +22,11 @@ First version
 
 #Requires -Module AuditSystemDsc
 
+<<<<<<< HEAD:Examples/Resources/AuditSetting/1-AuditSetting_AuditVolumneNtfsConfig.ps1
 configuration AuditSetting_AuditVolumneNtfsConfig
+=======
+configuration AuditSetting_AuditVolumneNtfs
+>>>>>>> dev:Examples/Resources/AuditSetting/1-AuditSetting_AuditVolumneNtfs.ps1
 {
     Import-DscResource -ModuleName AuditSystemDsc
 
