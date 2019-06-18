@@ -22,11 +22,7 @@ First version
 
 #Requires -Module AuditSystemDsc
 
-<<<<<<< HEAD:Examples/Resources/AuditSetting/2-AuditSetting_AuditUsersPasswordNotRequiredConfig.ps1
-configuration AuditSetting_AuditUsersPasswordNotRequiredConfig
-=======
 configuration AuditSetting_AuditUsersPasswordNotRequired
->>>>>>> dev:Examples/Resources/AuditSetting/2-AuditSetting_AuditUsersPasswordNotRequired.ps1
 {
     Import-DscResource -ModuleName AuditSystemDsc
 
