@@ -14,16 +14,10 @@
 #      environment configuration  #
 #---------------------------------#
 
-version: 1.0.{build}.0 # TODO: Modify version so it fits your versioning.
+version: 1.0.{build}.0
 environment:
   gallery_api:
-    # TODO: Change to the correct API key if using PowerShell Gallery deploy task.
-    # If you wish to use this to publish your own module you'd need to set your
-    # own API key (encrypted by https://ci.appveyor.com/tools/encrypt).
-    #
-    # This API key can only be decrypted by the PowerShell Team's AppVeyor account,
-    # and can only be used for resource modules under the DSC Resource Kit.
-    secure: 9ekJzfsPCDBkyLrfmov83XbbhZ6E2N3z+B/Io8NbDetbHc6hWS19zsDmy7t0Vvxv
+    secure: ledbDE6pSWvJOaTv2cxN8WNv8WJl2gz+d/fcUQuc+5XiVS4iBQyPdweURgEHIpPg
 
 install:
     - ps: |
@@ -44,9 +38,6 @@ build: false
 
 test_script:
     - ps: |
-        # TODO:
-        # To use -CodeCovIo parameter, the repository need to connected
-        # to Codecov (see https://codecov.io/).
         Invoke-AppveyorTestScriptTask -CodeCoverage -CodeCovIo
 
 # scripts to run before deployment
@@ -61,6 +52,4 @@ after_test:
 
 deploy_script:
   - ps: |
-        # The DscResource.Template has opt-out from any deploy task to PSGallery.
-        # TODO: Opt-in to deploy tasks.
-        Invoke-AppVeyorDeployTask -OptIn @()
+        Invoke-AppVeyorDeployTask

@@ -8,16 +8,16 @@ This project has adopted [this code of conduct](CODE_OF_CONDUCT.md).
 
 ### master
 
-[![Build status](https://ci.appveyor.com/api/projects/status/vqviwd2mmclxeopb/branch/master?svg=true)](https://ci.appveyor.com/project/jcwalker/AuditSystemDsc/branch/master)
-[![codecov](https://codecov.io/gh/PowerShell/AuditSystemDsc/branch/master/graph/badge.svg)](https://codecov.io/gh/PowerShell/DscResource.Template/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/jcwalker/AuditSystemDsc?branch=master&svg=true)](https://ci.appveyor.com/project/jcwalker/AuditSystemDsc/branch/master)
+[![codecov](https://codecov.io/gh/jcwalker/AuditSystemDsc/branch/master/graph/badge.svg)](https://codecov.io/gh/PowerShell/DscResource.Template/branch/master)
 
 This is the branch containing the latest release -
 no contributions should be made directly to this branch.
 
 ### dev
 
-[![Build status](https://ci.appveyor.com/api/projects/status/vqviwd2mmclxeopb/branch/dev?svg=true)](https://ci.appveyor.com/project/jcwalker/AuditSystemDsc/branch/dev)
-[![codecov](https://codecov.io/gh/PowerShell/AuditSystemDsc/branch/dev/graph/badge.svg)](https://codecov.io/gh/jcwalker/AuditSystemDsc/branch/dev)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/jcwalker/AuditSystemDsc?branch=dev&svg=true)](https://ci.appveyor.com/project/jcwalker/AuditSystemDsc/branch/dev)
+[![codecov](https://codecov.io/gh/jcwalker/AuditSystemDsc/branch/dev/graph/badge.svg)](https://codecov.io/gh/jcwalker/AuditSystemDsc/branch/dev)
 
 This is the development branch to which contributions should be proposed
 by contributors as pull requests.
