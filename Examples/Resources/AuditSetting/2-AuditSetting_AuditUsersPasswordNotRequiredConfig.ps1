@@ -1,9 +1,9 @@
 <#PSScriptInfo
 .VERSION 1.0.0
-.GUID 0ea958da-bb97-41c6-a76f-9125930e72b3
+.GUID ede9ed8a-808e-4fcc-9c5b-f0bf6e1411e6
 .AUTHOR Jason Walker
 .COMPANYNAME
-.COPYRIGHT (c) 2019 Jason Walker. All rights reserved.
+.COPYRIGHT
 .TAGS DSCConfiguration
 .LICENSEURI https://github.com/jcwalker/AuditSystemDsc/blob/dev/LICENSE
 .PROJECTURI https://github.com/jcwalker/AuditSystemDsc/
@@ -11,9 +11,17 @@
 .EXTERNALMODULEDEPENDENCIES
 .REQUIREDSCRIPTS
 .EXTERNALSCRIPTDEPENDENCIES
-.RELEASENOTES First version.
-.PRIVATEDATA
+.RELEASENOTES
+First version
 #>
+
+<#
+.DESCRIPTION
+ This examples shows how to verify all local users require a password.
+#>
+
+#Requires -Module AuditSystemDsc
+
 configuration AuditSetting_AuditUsersPasswordNotRequiredConfig
 {
     Import-DscResource -ModuleName AuditSystemDsc

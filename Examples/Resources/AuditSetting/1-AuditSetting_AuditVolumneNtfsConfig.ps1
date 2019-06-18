@@ -1,9 +1,9 @@
 <#PSScriptInfo
 .VERSION 1.0.0
-.GUID dfbc4888-efec-4229-a2b6-fe6a25012e61
+.GUID 9a10bb5d-84cc-45fa-a3ca-24d83ff7e1e1
 .AUTHOR Jason Walker
 .COMPANYNAME
-.COPYRIGHT (c) 2019 Jason Walker. All rights reserved.
+.COPYRIGHT
 .TAGS DSCConfiguration
 .LICENSEURI https://github.com/jcwalker/AuditSystemDsc/blob/dev/LICENSE
 .PROJECTURI https://github.com/jcwalker/AuditSystemDsc/
@@ -11,9 +11,16 @@
 .EXTERNALMODULEDEPENDENCIES
 .REQUIREDSCRIPTS
 .EXTERNALSCRIPTDEPENDENCIES
-.RELEASENOTES First version.
-.PRIVATEDATA
+.RELEASENOTES
+First version
 #>
+
+<#
+.DESCRIPTION 
+ This examples shows how to verify no volumes are formated anything other than NTFS
+#>
+
+#Requires -Module AuditSystemDsc
 
 configuration AuditSetting_AuditVolumneNtfsConfig
 {
