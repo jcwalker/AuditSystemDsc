@@ -1,6 +1,7 @@
 # Examples
 
-This will help to understand how to setup certain scenarios with the AuditSystemDsc resource module.
+This will help to understand how to setup certain scenarios with the
+AuditSystemDsc resource module.
 
 ## Resource examples
 

@@ -1,6 +1,6 @@
 <#PSScriptInfo
 .VERSION 1.0.0
-.GUID 9a10bb5d-84cc-45fa-a3ca-24d83ff7e1e1
+.GUID ede9ed8a-808e-4fcc-9c5b-f0bf6e1411e6
 .AUTHOR Jason Walker
 .COMPANYNAME
 .COPYRIGHT
@@ -16,23 +16,23 @@ First version
 #>
 
 <#
-.DESCRIPTION 
- This examples shows how to verify no volumes are formated anything other than NTFS
+.DESCRIPTION
+ This examples shows how to verify all local users require a password.
 #>
 
 #Requires -Module AuditSystemDsc
 
-configuration AuditSetting_AuditVolumneNtfsConfig
+configuration AuditSetting_AuditUsersPasswordNotRequired
 {
     Import-DscResource -ModuleName AuditSystemDsc
 
     node localhost
     {
-        AuditSetting AuditNtfsVolumne
+        AuditSetting LocalAccountWithoutPassword
         {
-            Query = "SELECT * FROM Win32_LogicalDisk WHERE DriveType = '3'"
-            Property = "FileSystem"
-            DesiredValue = 'NTFS'
+            Query = "SELECT * FROM Win32_UserAccount WHERE Disabled = $false"
+            Property = "PasswordRequired"
+            DesiredValue = $true
             Operator = '-eq'
         }
     }
