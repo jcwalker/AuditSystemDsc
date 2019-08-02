@@ -29,5 +29,14 @@ Configuration AuditSetting_AuditNtfsVolumne_Config
             DesiredValue = 'NTFS'
             Operator = '-eq'
         }
+
+        AuditSetting LocalAccountWithoutPassword
+        {
+            NameSpace = 'ROOT/StandardCimv2'
+            Query = "SELECT * FROM MSFT_NetIPAddress WHERE InterfaceAlias='Ethernet'"
+            Property = "PrefixLength"
+            DesiredValue = '24'
+            Operator = '-eq'
+        }
     }
 }

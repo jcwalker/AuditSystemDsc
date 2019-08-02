@@ -28,7 +28,7 @@ configuration AuditSetting_VerifyNetworkPrefixLength
 
     node localhost
     {
-        AuditSetting LocalAccountWithoutPassword
+        AuditSetting VerifyNetworkPrefixLength
         {
             NameSpace = 'ROOT/StandardCimv2'
             Query = "SELECT * FROM MSFT_NetIPAddress WHERE InterfaceAlias='Ethernet'"

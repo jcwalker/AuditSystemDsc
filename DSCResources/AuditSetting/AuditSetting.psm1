@@ -52,7 +52,7 @@ function Get-TargetResource
 
     $cimInstanceParameters = @{
         Query = $Query
-        ErrorAction = 'Stop'
+        ErrorAction = 'Continue'
     }
 
     if ($PSBoundParameters.ContainsKey('NameSpace'))
@@ -60,7 +60,7 @@ function Get-TargetResource
         $cimInstanceParameters.Add('NameSpace',$NameSpace)
     }
 
-    $queryResult = Get-CimInstance -Query $Query
+    $queryResult = Get-CimInstance @cimInstanceParameters
 
     return @{
         Query = $Query
