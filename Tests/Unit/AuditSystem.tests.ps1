@@ -38,6 +38,7 @@ try
                     Property = 'Property1'
                     DesiredValue = 'InDesiredState'
                     Operator = '-eq'
+                    NameSpace = 'root/CIMv2'
                 }
             }
 
@@ -62,6 +63,7 @@ try
                     Property = 'Property1'
                     DesiredValue = 'InDesiredState'
                     Operator = '-eq'
+                    NameSpace = 'root/CIMv2'
                 }
             }
 
