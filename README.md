@@ -81,6 +81,7 @@ A resource the leverages CIM classes to verify system settings.
 
 #### Parameters
 
+* **`[String]` NameSpace**: Specifies the namespace of CIM class.
 * **`[String]` Query** _(Key)_: A WQL query used to retrieve the setting to be audited.
 * **`[String]` Property** _(Key)_: The property name to be audited.
 * **`[String]` DesiredValue** _(Key)_: Specifies the desired value
