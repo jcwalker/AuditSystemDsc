@@ -101,7 +101,6 @@ A resource the leverages CIM classes to verify system settings.
 * [Verify netowrk prefix length](/Examples/Resources/AuditSetting/3-AuditSetting_VerifyNetworkPrefixLength.ps1)
 * [Verify service pack level](/Examples/Resources/AuditSetting/4-AuditSetting_VerifyServicePackLevel.ps1)
 
-
 #### Known issues
 
 All issues are not listed here, see [here for all open issues](https://github.com/jcwalker/AuditSystemDsc/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+Folder).
