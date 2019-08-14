@@ -98,6 +98,8 @@ A resource the leverages CIM classes to verify system settings.
 
 * [Audit disk volumnes are NTFS](/Examples/Resources/AuditSetting/1-AuditSetting_AuditVolumneNtfs.ps1)
 * [Audit local users that don't require a password](/Examples/Resources/AuditSetting/2-AuditSetting_AuditUsersPasswordNotRequired.ps1)
+* [Verify netowrk prefix length](/Examples/Resources/AuditSetting/3-AuditSetting_VerifyNetworkPrefixLength.ps1)
+* [Verify nservice pack level](/Examples/Resources/AuditSetting/4-AuditSetting_VerifyServicePackLevel.ps1)
 
 #### Known issues
 
