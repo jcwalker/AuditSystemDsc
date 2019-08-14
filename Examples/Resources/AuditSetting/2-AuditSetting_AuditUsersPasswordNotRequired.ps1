@@ -17,7 +17,7 @@ First version
 
 <#
 .DESCRIPTION
- This examples shows how to verify all local users require a password.
+    This examples shows how to verify all local users require a password.
 #>
 
 #Requires -Module AuditSystemDsc

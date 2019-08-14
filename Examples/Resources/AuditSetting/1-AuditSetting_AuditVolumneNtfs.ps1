@@ -17,7 +17,7 @@ First version
 
 <#
 .DESCRIPTION 
- This examples shows how to verify no volumes are formated anything other than NTFS
+    This examples shows how to verify no volumes are formated anything other than NTFS
 #>
 
 #Requires -Module AuditSystemDsc
