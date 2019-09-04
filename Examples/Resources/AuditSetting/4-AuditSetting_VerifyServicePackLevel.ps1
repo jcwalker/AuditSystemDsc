@@ -1,6 +1,6 @@
 <#PSScriptInfo
 .VERSION 1.0.0
-.GUID ede9ed8a-808e-4fcc-9c5b-f0bf6e1411e6
+.GUID ac6e5b9b-c16b-46c6-a3ba-172da1b4a212
 .AUTHOR Jason Walker
 .COMPANYNAME
 .COPYRIGHT
@@ -17,23 +17,25 @@ First version
 
 <#
 .DESCRIPTION
-    This examples shows how to verify all local users require a password.
+    This examples shows how to verify service pack level by
+    asserting the DesiredValue (6.2.9200) is less than or equal
+    to the operating system build number.
 #>
 
 #Requires -Module AuditSystemDsc
 
-configuration AuditSetting_AuditUsersPasswordNotRequired
+configuration AuditSetting_VerifyServicePackLevel
 {
     Import-DscResource -ModuleName AuditSystemDsc
 
     node localhost
     {
-        AuditSetting LocalAccountWithoutPassword
+        AuditSetting OperatingSystemVersion
         {
-            Query = "SELECT * FROM Win32_UserAccount WHERE Disabled = $false"
-            Property = "PasswordRequired"
-            DesiredValue = $true
-            Operator = '-eq'
+            Property = 'Version'
+            Operator = '-le'
+            Query = 'SELECT * FROM Win32_OperatingSystem'
+            DesiredValue = '6.2.9200'
         }
     }
 }

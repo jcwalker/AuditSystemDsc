@@ -81,6 +81,7 @@ A resource the leverages CIM classes to verify system settings.
 
 #### Parameters
 
+* **`[String]` NameSpace**: Specifies the namespace of CIM class.
 * **`[String]` Query** _(Key)_: A WQL query used to retrieve the setting to be audited.
 * **`[String]` Property** _(Key)_: The property name to be audited.
 * **`[String]` DesiredValue** _(Key)_: Specifies the desired value
@@ -97,6 +98,8 @@ A resource the leverages CIM classes to verify system settings.
 
 * [Audit disk volumnes are NTFS](/Examples/Resources/AuditSetting/1-AuditSetting_AuditVolumneNtfs.ps1)
 * [Audit local users that don't require a password](/Examples/Resources/AuditSetting/2-AuditSetting_AuditUsersPasswordNotRequired.ps1)
+* [Verify netowrk prefix length](/Examples/Resources/AuditSetting/3-AuditSetting_VerifyNetworkPrefixLength.ps1)
+* [Verify service pack level](/Examples/Resources/AuditSetting/4-AuditSetting_VerifyServicePackLevel.ps1)
 
 #### Known issues
 

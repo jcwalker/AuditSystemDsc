@@ -20,6 +20,8 @@ $script:localizedData = Get-LocalizedData -ResourceName 'AuditSetting'
     .PARAMETER DesiredValue
         Specifies the desired value of the property being audited.
         Not used in Get-TargetResource.
+    .PARAMETER NameSpace
+        Specifies the namespace of the CIM class.
 #>
 function Get-TargetResource
 {
@@ -41,15 +43,30 @@ function Get-TargetResource
 
         [Parameter(Mandatory=$true)]
         [string]
-        $DesiredValue
+        $DesiredValue,
+
+        [Parameter()]
+        [System.String]
+        $NameSpace
     )
 
-    $queryResult = Get-CimInstance -Query $Query
+    $cimInstanceParameters = @{
+        Query = $Query
+        ErrorAction = 'Continue'
+    }
+
+    if ($PSBoundParameters.ContainsKey('NameSpace'))
+    {
+        $cimInstanceParameters.Add('NameSpace',$NameSpace)
+    }
+
+    $queryResult = Get-CimInstance @cimInstanceParameters
 
     return @{
         Query = $Query
         Property = $Property
         Operator = $Operator
+        NameSpace = $NameSpace
         DesiredValue = $DesiredValue
         ResultString = [string[]]$(Write-PropertyValue -Object $queryResult)
     }
@@ -78,7 +95,11 @@ function Set-TargetResource
 
         [Parameter(Mandatory = $true)]
         [System.String]
-        $DesiredValue
+        $DesiredValue,
+
+        [Parameter()]
+        [System.String]
+        $NameSpace
     )
 }
 
@@ -93,6 +114,8 @@ function Set-TargetResource
         The comparison operator used to craft the condition that defines compliance.
     .PARAMETER DesiredValue
         Specifies the desired value of the property being audited.
+    .PARAMETER NameSpace
+        Specifies the namespace of the CIM class.
 #>
 function Test-TargetResource
 {
@@ -114,13 +137,27 @@ function Test-TargetResource
 
         [Parameter(Mandatory=$true)]
         [string]
-        $DesiredValue
+        $DesiredValue,
+
+        [Parameter()]
+        [System.String]
+        $NameSpace
     )
 
     try
     {
         $result = $true
-        $queryResult = Get-CimInstance -Query $Query -ErrorAction Stop
+        $cimInstanceParameters = @{
+            Query = $Query
+            ErrorAction = 'Stop'
+        }
+
+        if ($PSBoundParameters.ContainsKey('NameSpace'))
+        {
+            $cimInstanceParameters.Add('NameSpace',$NameSpace)
+        }
+
+        $queryResult = Get-CimInstance @cimInstanceParameters
 
         foreach ($instance in $queryResult)
         {

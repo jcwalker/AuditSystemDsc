@@ -1,7 +1,7 @@
 @{
 
 # Version number of this module.
-ModuleVersion = '1.0.0'
+ModuleVersion = '1.1.0'
 
 # ID used to uniquely identify this module
 GUID = '4e702818-a3b0-4a19-a8f1-92341a2a734a'
@@ -38,7 +38,8 @@ PrivateData = @{
         ProjectUri = 'https://github.com/jcwalker/AuditSystemDsc'
 
         # ReleaseNotes of this module
-    ReleaseNotes = ''
+        ReleaseNotes = '* Added NameSpace parameter to AuditSetting [#8](https://github.com/jcwalker/AuditSystemDsc/issues/8)
+        * Add example demonstrating how to assert service pack level.'
 
     } # End of PSData hash table
 

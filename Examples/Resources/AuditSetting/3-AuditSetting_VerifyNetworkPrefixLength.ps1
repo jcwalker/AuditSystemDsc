@@ -1,6 +1,6 @@
 <#PSScriptInfo
 .VERSION 1.0.0
-.GUID ede9ed8a-808e-4fcc-9c5b-f0bf6e1411e6
+.GUID ac6e5b9b-c16b-46c6-a3ba-172da1b4a212
 .AUTHOR Jason Walker
 .COMPANYNAME
 .COPYRIGHT
@@ -22,17 +22,18 @@ First version
 
 #Requires -Module AuditSystemDsc
 
-configuration AuditSetting_AuditUsersPasswordNotRequired
+configuration AuditSetting_VerifyNetworkPrefixLength
 {
     Import-DscResource -ModuleName AuditSystemDsc
 
     node localhost
     {
-        AuditSetting LocalAccountWithoutPassword
+        AuditSetting VerifyNetworkPrefixLength
         {
-            Query = "SELECT * FROM Win32_UserAccount WHERE Disabled = $false"
-            Property = "PasswordRequired"
-            DesiredValue = $true
+            NameSpace = 'ROOT/StandardCimv2'
+            Query = "SELECT * FROM MSFT_NetIPAddress WHERE InterfaceAlias='Ethernet'"
+            Property = "PrefixLength"
+            DesiredValue = '24'
             Operator = '-eq'
         }
     }
